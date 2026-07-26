@@ -4,3 +4,14 @@ FROM Employee e1
 JOIN Employee e2 ON e1.id=e2.managerId
 GROUP BY e1.id,e1.name
 HAVING COUNT(e2.id)>=5;
+
+
+//without join ,using subquery
+# Write your MySQL query statement below
+SELECT name
+FROM Employee
+WHERE id=(
+    SELECT managerId 
+FROM Employee
+GROUP BY managerId
+HAVING COUNT(DISTINCT id)>=5)
