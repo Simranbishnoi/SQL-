@@ -10,8 +10,10 @@ HAVING COUNT(e2.id)>=5;
 # Write your MySQL query statement below
 SELECT name
 FROM Employee
-WHERE id=(
+WHERE id IN   # don't use id=
+(
     SELECT managerId 
 FROM Employee
 GROUP BY managerId
 HAVING COUNT(DISTINCT id)>=5)
+
