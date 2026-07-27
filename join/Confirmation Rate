@@ -1,0 +1,7 @@
+# Write your MySQL query statement below
+SELECT s.user_id,
+ROUND(IFNULL(AVG(IF(c.action='confirmed',1,0)),0),2) AS confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c ON s.user_id=c.user_id  #not inner join so that we don't drop user 6
+# WHERE c.action='confirmed'#remove it coz it is filtering all timeout which we need for 0 confirmation
+GROUP BY s.user_id
