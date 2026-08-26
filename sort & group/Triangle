@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+# learnt how to use IF here also triangle verification in new way that is sum of all-Greatest> Greatest
+SELECT x,y,z ,IF((x+y
++z)-GREATEST
+(x,y,z)>GREATEST(x,y,z),'Yes','No')AS triangle
+FROM Triangle;
+
+
