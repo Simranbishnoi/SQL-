@@ -6,6 +6,6 @@ FROM
     LAG(num,1) over (ORDER BY id) as prev1,
     LAG(num,2) over (ORDER BY id) as prev2
     from Logs
-)t
+)t  # temporary table where col are num,prev1,prev2 and 3rd line from is choosing from this t and this is subquery 
 WHERE num=prev1
 AND   num=prev2;
