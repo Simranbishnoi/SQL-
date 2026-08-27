@@ -9,3 +9,30 @@ FROM
 )t  # temporary table where col are num,prev1,prev2 and 3rd line from is choosing from this t and this is subquery 
 WHERE num=prev1
 AND   num=prev2;
+
+
+#came accross different kinds of subqueries
+#SELECT
+SELECT
+    name,
+    salary,
+    (SELECT AVG(salary) FROM Employee) AS avg_salary
+FROM Employee;
+
+#FROM
+SELECT num
+FROM (
+    SELECT
+        num,
+        LAG(num) OVER (ORDER BY id) AS prev1
+    FROM Logs
+) t
+WHERE num = prev1;
+
+#WHERE 
+SELECT *
+FROM Employee
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Employee
+);
