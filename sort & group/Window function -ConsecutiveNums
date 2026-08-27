@@ -36,3 +36,10 @@ WHERE salary > (
     SELECT AVG(salary)
     FROM Employee
 );
+
+
+WHERE → filter using another query
+
+FROM → treat another query's result as a table
+
+SELECT → use another query's result as a value/column
