@@ -16,3 +16,35 @@ WHERE product_id NOT IN(
     FROM Products
     WHERE change_date<='2019-08-16'
 );
+
+
+#need to come back here 
+#CTE   it is also alias for subquery
+WITH table2 AS (
+    SELECT product_id, new_price AS price, rn #rn should be here too
+    FROM (
+        SELECT
+            product_id,
+            new_price,
+#WINDOW FUNCTION
+            ROW_NUMBER() OVER (
+                PARTITION BY product_id
+                ORDER BY change_date DESC
+            ) AS rn  #rn is column
+        FROM Products
+        WHERE change_date <= '2019-08-16'
+    ) t #subquery result by using t we can refer to this subquery result table
+)
+
+SELECT
+    p.product_id,
+    COALESCE(t.price, 10) AS price  #this is check if t.price is there if not 10 so for products whose product prices are not changed before the given date will be null in left join 
+FROM (
+    SELECT DISTINCT product_id  ## get one row for every product
+    FROM Products
+) p
+#to get the null for product_ids where no price change was observed before the date
+LEFT JOIN table2 t
+    ON t.product_id = p.product_id
+    AND t.rn = 1; #rn needs to be a column available in table2
+
